@@ -1,0 +1,49 @@
+<link type="text/css" href="/static/css/table.css" rel="stylesheet" />
+<link type="text/css" href="/static/css/modal.css" rel="stylesheet" />
+
+<div class="table-wrapper">
+    <div>
+        <h2>Device list</h2>
+        <div class="table">
+            <table id="devices">
+                <tr>
+                    <th style="width: 70px;" class=" top-left">Trimming</th>
+                    <th class="icon-heading">Icon</th>
+                    <th style="width: 190px;" class="name">Name</th>
+                    <th style="width: 170px;" class="deviceType">Product</th>
+                    <th style="width: 160px;" class="vendor">Vendor</th>
+                    <th class=" settings-heading top-right">Config</th>
+
+                </tr>
+            </table>
+        </div>
+        <div class="table scroll">
+            <table id="devices">
+                {% for i, d in devices.enumerate() %}
+                <tr>
+                    <td class="blocking">
+                        <label class="switch">
+                            <input id="{{ i }}_toggle" type="checkbox" {% if d.activated %} checked {% endif %}>
+                            <span class="slider round"></span>
+                        </label>
+                        <span>Off/On</span>
+                    </td>
+                    <td class="table-image">
+                        <img class="icon" src="{{ d.icon }}" />
+                        {% if d.connected == True %}
+                        <img class="connected" src="static/wifi.png" />
+                        {% endif %}
+                    </td>
+                    <td class="name">{{ d.name }}</td>
+                    <td class="deviceType">{{ d.print_product() }}</td>
+                    <td class="vendor">{{ d.print_vendor() }}</td>
+                    <td class="table-image settings">
+                        <input type="image" src="static/config.png" id="{{ i }}_config" class="config">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="fadeout"></div>
+    </div>
+</div>

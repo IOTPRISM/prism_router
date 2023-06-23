@@ -1,0 +1,94 @@
+<link type="text/css" href="/static/css/settings.css" rel="stylesheet" />
+
+{% include 'header.html' %}
+<div class="background">
+    <br><br>
+    <div class="centered">
+        <div class="outline" style="padding-top: 0px;">
+            <div style="max-width: 560px"><br><br><br>
+                <form name="settings" action='/settings' method='POST' style="padding: 0px 40px;">
+                    <label>Upstream DNS Servers </label><br><br>
+                    <input type="text" name="nameservers" value="{{ network.print_name_servers() }}"><br><br>
+                    <label>WiFi SSID </label><br><br>
+                    <input type="text" name="ssid" value="{{ network.ssid }}"><br><br>
+                    <label>WiFi Password</label><br><br>
+                    <input id="pwd" type="password" name="passphrase" value="{{ network.passphrase }}"><br><br>
+                    <label class='container' style="padding: 0px;">
+                        <input type="checkbox" onclick="togglePasswordView('pwd')" value="0" />
+                        <label style="padding-left: 30px;">Show Password</label>
+                        <span class="checkmark"></span>
+                    </label><br>
+                    <label>Admin Username </label><br><br>
+                    <input type="text" name="admin_username" value="{{ system.username }}"><br><br>
+                    <label>Admin Password </label><br><br>
+                    <input id="adminpwd" type="password" name="admin_password" value="{{ system.password }}"><br><br>
+                    <label class='container' style="padding: 0px;">
+                        <input type="checkbox" onclick="togglePasswordView('adminpwd')" value="0" />
+                        <label style="padding-left: 30px;">Show Password</label>
+                        <span class="checkmark"></span>
+                    </label><br>
+
+                    <label>Scanning Window Length (s)</label><br><br>
+                    <input type="number" name="scanning_window" value="{{ trafficSampler.get_window_size() }}"><br><br>
+                    <label>Scanning Interval Length (s)</label><br><br>
+                    <input type="number" name="scanning_interval" value="{{ trafficSampler.get_interval() }}"><br><br>
+
+                    <label>Change interface colour</label><br><br>
+                    <input type="text" name="color" style="display: none;">
+                    {% for color in interfaceColor %}
+                    <span class="swatch" style="background-color: {{ color }}"></span>
+                    {% endfor %}
+                    <br><br>
+                    <a href="http://{{ network.wanIp }}:8080/index.asp"<label>Advanced Settings</label></a>
+                    <br><br><br>
+                    <input type="button" class="btn settings-btn" onClick="submitForm()" value="Save Changes">
+                </form>
+            </div>
+        </div>
+    </div>|
+    <br><br>
+</div>
+</body>
+
+{% include 'footer.html' %}
+</html>
+
+<script>
+    function togglePasswordView(id) {
+        var p = document.getElementById(id);
+        if (p.type === "password") {
+            p.type = "text";
+        } else {
+            p.type = "password";
+        }
+    }
+    
+    function checkPassword() {
+        const p = $("#pwd").val();
+        if (p.length < 8 || p.includes(' ')) {
+            alert('Minimum password length is 8 characters, no spaces. The password has not been changed.');
+            return false
+        }
+        return true
+    }
+    
+    function submitForm() {
+        if (checkPassword()) {
+            document.forms['settings'].submit();
+        }
+    }
+    
+    $(".swatch").each(function () {
+        if (rgbToHex($(this).css('background-color')) == '{{ interfaceColor.color }}') {
+            $(this).toggleClass('swatch-active')
+        }
+    })
+    
+    $(".swatch").click(function () {
+        $(".swatch-active").toggleClass('swatch-active')
+        $(this).toggleClass('swatch-active')
+        const color = rgbToHex($(this).css('background-color'))
+        $("[name='color']").val(color)
+    })
+    
+</script>

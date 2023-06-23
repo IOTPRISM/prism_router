@@ -1,0 +1,55 @@
+<link type="text/css" href="/static/css/chart.css" rel="stylesheet" />
+
+    <div class="outline">
+        <canvas id="trafficChartType"></canvas>
+    </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+
+<script type="text/javascript">
+
+    var data = {
+        labels: {{ clock.json_time_list()|safe }},
+        datasets: [
+        {
+            label: 'Allowed',
+            data: {{ traffic.allowed|safe }},
+            backgroundColor: colours[1],
+        },
+        {
+            label: 'Blocked First Party',
+            data: {{ traffic.blockedByType['first']|safe }},
+            backgroundColor: colours[3],
+        },
+        {
+            label: 'Blocked Third Party',
+            data: {{ traffic.blockedByType['third']|safe }},
+            backgroundColor: colours[4],
+        },
+        {
+            label: 'Blocked Support Party',
+            data: {{ traffic.blockedByType['support']|safe }},
+            backgroundColor: colours[5],
+        },
+        ]
+    };
+    
+    var config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        }
+    };
+
+    Chart.defaults.font.size = 14;
+    var ctx = document.getElementById('trafficChartType').getContext('2d');
+    var myChart = new Chart(ctx, config, data);
+</script>

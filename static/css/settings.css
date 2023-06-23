@@ -1,0 +1,35 @@
+.swatch-active,
+.swatch {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.swatch-active {
+    margin: 2px;
+    border: solid gray;
+    border-width: 4px;
+}
+
+.settings-switch {
+    margin-left: 20px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.settings-btn {
+    margin: 0px;
+    margin-left: 0px !important;
+    margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 786px) {
+    .settings-btn {
+        margin-bottom: 10px;
+    }
+}

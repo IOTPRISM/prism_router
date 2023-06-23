@@ -1,0 +1,319 @@
+:root {
+  --accent-color:#009999;
+}
+/* do not alter the format of the code above */
+
+/* colour pallette: E30073 ff1f8f ff8ac4 FF99FF ffbdde */
+
+/* Device Tables */
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    margin: 0px;
+    background-color: var(--accent-color);
+}
+
+.centered {
+    margin: auto;
+    max-width: 800px;
+}
+
+.background {
+    min-height: 74vh;
+    background: linear-gradient(180deg, var(--accent-color) -30%, rgba(255, 255, 255, 1) 4%);
+}
+
+/* Input Button */
+
+.btn {
+    background-color: var(--accent-color);
+    border-radius: 4px;
+    margin-left: 40px;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/* text input */
+
+input[type=password],
+input[type=text],
+input[type=number],
+input[type=file],
+select {
+    width: 100%;
+    padding: 5px 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 10px;
+}
+
+/* text */
+
+h1,
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    padding-left: 40px;
+    margin: 0px;
+}
+
+h2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding-bottom: 50px;
+}
+
+li,
+p,
+a,
+label,
+span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.setting {
+    margin-bottom: 200px;
+    margin-top: 200px;
+}
+
+#earth_div {
+    width: 70%;
+    height: 600px;
+    float: right;
+}
+
+/* The container */
+
+.container {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    display: block;
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.container p {
+    padding: 5px 0px 5px 30px;
+    margin: 0px;
+    font-size: 14px;
+}
+
+/* Create a custom checkbox */
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+
+.container:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+
+.container input:checked~.checkmark {
+    background-color: var(--accent-color);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+
+.container .checkmark:after {
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* The switch - the box around the slider */
+
+.switch {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 28px;
+}
+
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+/* The slider */
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: var(--accent-color);
+}
+
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(12px);
+    -ms-transform: translateX(12px);
+    transform: translateX(12px);
+}
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+    transform: translate(0, -5px);
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.outline {
+    margin: 10px 40px;
+    padding: 5px;
+    border: solid lightgray;
+    border-width: 3px;
+    border-radius: 30px 30px 30px 30px;
+}
+
+.switch-label {
+    display: none;
+    box-decoration-break: clone;
+}
+
+.container {
+    padding-bottom: 15px;
+}
+
+.top-right {
+    border-radius: 0px 5px 0px 0px;
+}
+
+.top-left {
+    border-radius: 5px 0px 0px 0px;
+}
+
+.export {
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
+}
+
+
+@media only screen and (max-width: 786px) {
+    .centered {
+        width: 98vw;
+    }
+    .title h1 {
+        font-size: 20px;
+        padding-left: 0px;
+        left: 90px;
+    }
+    .title h3 {
+        font-size: 14px;
+        padding-left: 0px;
+        left: 90px;
+    }
+    .title .logo {
+        display: inline-block;
+        height: 40px;
+        left: 30px;
+    }
+    .navbar li a {
+        padding: 14px 10px;
+        font-size: 13px;
+    }
+
+    #graphs {
+        display: none;
+    }
+
+    .table-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .outline {
+        padding: 40px 0px;
+    }
+}

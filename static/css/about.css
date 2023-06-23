@@ -1,0 +1,17 @@
+.about-wrapper h3 {
+    padding-bottom: 20px;
+}
+
+#devices {
+    max-width: 200px;
+}
+
+@media only screen and (max-width: 786px) {
+    .about-wrapper .row {
+        display: block;
+    }
+
+    .database-metrics {
+        display: none;
+    }
+}

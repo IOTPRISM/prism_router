@@ -1,0 +1,174 @@
+<meta charset="UTF-8">
+<script type="text/javascript" src="static/js/utils.js"></script>
+<link type="text/css" href="/static/css/modal.css" rel="stylesheet" />
+
+{% for i, d in devices.enumerate() %}
+<!-- Modal -->
+<div id="{{ i }}_modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="outline">
+            <form name="{{ i }}_edit_devices" action="/edit" method="POST" enctype="multipart/form-data">
+                <span class="close" id="{{ i }}_close">&times;</span>
+                <h2 style="padding: 0px;">General Device Settings</h2>
+                <br><label>Change Device Icon</label><br><br>
+                <div name="{{ d.mac }}_icon">
+                    <img class="icon" src="{{ d.icon }}" />
+                </div>
+                <label class="uploadLabel" style="width: 60px; height: 25px;">
+                    <input type="file" style="display: none;" name="{{ d.mac }}_uploaded">
+                    Upload Icon
+                </label>
+                {% if d.custom_icon %}
+                <label class="uploadLabel" style="width: 20px; height: 25px;">
+                    <input type="checkbox" name="{{ d.mac }}_delete_icon" style="display: none;" value=1>
+                    <img src="static/bin.png" class="bin">
+                </label>
+                {% endif %}
+                </label>
+
+                <br><br><label>Change Device Name</label><br><br>
+                <input type="text" name="{{ d.mac }}_new_name" value="{{ d.name }}"
+                    style="max-width: 200px;">
+
+                <br><br><label>Select Device Type</label><br><br>
+                <select name="{{ d.mac }}_new_product" style="max-width: 200px;">
+                    {% for name in products.get() %}
+                    <option {% if name==d.print_product() %} SELECTED {% endif %}>
+                        {{ name }}
+                    </option>
+                    {% endfor %}
+                    <option {% if d.print_product()=='Unknown' %} SELECTED {% endif %}>Unknown</option>
+
+                    {% if d.device_type == 'Identifying...' %}}
+                    <option SELECTED>Identifying...</option>
+                    {% endif %}
+                </select><br><br><br>
+                <label class="uploadLabel" style="max-width: 35px;">Delete Device
+                    <input type="checkbox" name="{{ d.mac }}_delete_device" style="display: none;" value=1>
+                    <img src="static/bin.png" class="bin">
+                </label>
+                <br><br>
+                <p>All traffic data for the device will be deleted, this action is irreversible.</p><br><br>
+
+                <h2 style="padding: 0px;">Device Trimming Settings</h2><br>
+                <label class="switch" style="float: left;">
+                    <input id="{{ i }}_default_policy" type="checkbox" {% if d.block_default %} checked {% endif %}>
+                    <span class="slider round"></span>
+                </label>
+                <label style="float: left;">Enable default trimming for new destinations</label>
+
+                <br><br><label>Trimmed Domains (click to allow)</label><br>
+                <div class="dest-container">
+                    {% for j, b in d.enumerate_blocked() %}
+                    <label>
+                        <span class="dest-disable" id="{{ i }}_{{ j }}_hide_block">&times; </span>
+                        <span class="dest strike" id="{{ i }}_{{ j }}_block">{{ b.name }} {% if b.party %} - {{ b.party }} {% endif %}
+                            {% if b.iso_code %} - <script>document.write(isoCountryCodeToFlagEmoji('{{ b.iso_code }}'))</script> {% endif %}
+                        </span><br>
+                    </label>
+                    {% endfor %}
+                </div>
+                <br><input type="text" name="{{ d.mac }}_block_domains"
+                    placeholder="Add new domains... (comma separated)"><br>
+
+                <br><br><label>Allowed Domains (click to trim)</label><br>
+                <div class="dest-container">
+                    {% for j, b in d.enumerate_allowed() %}
+                    <label>
+                        <span class="dest-disable" id="{{ i }}_{{ j }}_hide_allow">&times; </span>
+                        <span class="dest" id="{{ i }}_{{ j }}_allow">{{ b.name }} {% if b.party %} - {{ b.party }} {% endif %}
+                            {% if b.iso_code %} - <script>document.write(isoCountryCodeToFlagEmoji('{{ b.iso_code }}'))</script> {% endif %}
+                        </span><br>
+                    </label>
+                    {% endfor %}
+                </div>
+                <br><br>
+                <h2 style="padding: 0px;">Device Anomaly Detection Settings</h2><br>
+                <label class="switch" style="float: left;">
+                    <input type="checkbox" id='{{ i }}_sniff' {% if d.sniff %} checked {% endif %}>
+                    <span class="slider round"></span>
+                </label>
+                <label style="float: left;">Enable Traffic Analysis</label><br><br>
+                <br>
+                <input type="button" class="btn saveChanges"
+                    onClick="document.forms['{{ i }}_edit_devices'].submit();" value="Save Changes">
+            </form>
+        </div>
+    </div>
+    {% for j, b in d.enumerate_blocked() %}
+    <script>
+        setupClickToggle('{{ i }}', '{{ j }}', '{{ b.name }}', '{{ d.mac }}', 'block')
+    </script>
+    {% endfor %}
+
+    {% for j, b in d.enumerate_allowed() %}
+    <script>
+        setupClickToggle('{{ i }}', '{{ j }}', '{{ b.name }}', '{{ d.mac }}', 'allow')
+    </script>
+    {% endfor %}
+</div>
+
+<script>
+    $('#{{ i }}_config').click(function () {
+        $("#{{ i }}_modal").show()
+    })
+
+    $('#{{ i }}_close').click(function () {
+        $("#{{ i }}_modal").hide()
+    })
+
+    $('#{{ i }}_default_policy').bind('change', function () {
+        if ($(this).is(':checked')) {
+            if (confirm("Are you sure you to trim new domains by default for {{ d.name }}?") == false) {
+                $('#{{ i }}_default_policy').prop("checked", false);
+            }
+            else {$.post("/{{ d.mac }}_block_default");}
+        }
+        else {$.post("/{{ d.mac }}_allow_default");};
+    });
+
+    $('#{{ i }}_sniff').bind('change', function () {
+        if ($('#{{ i }}_sniff').prop('checked') == false) {
+            if (confirm("Are you sure you to disable traffic analysis {{ d.name }}? your device will not be monitored for security threats.") == false) {
+                $('#{{ i }}_sniff').prop("checked", true);
+            }
+            else {$.post("/{{ d.mac }}_sniff_off");}
+        }
+        else {$.post("/{{ d.mac }}_sniff_on");};
+    });
+
+    $('[id="{{ i }}_toggle"]').bind('change', function () {
+        if (!$(this).is(':checked')) {
+            if (confirm("Are you sure you want to turn off IoTrimmer for {{ d.name }}?") == false) {
+                $(this).prop("checked", true);
+            }
+            else {$.post("/{{ d.mac }}_off");}
+        }
+        else {$.post("/{{ d.mac }}_on");};
+    });
+    
+    $('input[name="{{ d.mac }}_delete_device"]').click(function () {
+        if ($('input[name="{{ d.mac }}_delete_device"]').prop('checked')) {
+            if (confirm("Are you sure you want to delete device {{ d.name }}?") == false) {
+                $('input[name="{{ d.mac }}_delete_device"]').prop('checked', false)
+                return
+            }
+            else {
+                $(this).parent().toggleClass("clicked")
+                return
+            }
+        }
+        $(this).parent().toggleClass("clicked")
+    });
+    
+    $('input[name="{{ d.mac }}_delete_icon"]').click(function () {
+        $(this).parent().toggleClass("clicked")
+    });
+    
+    $('input[name=" {{d.mac}}_uploaded"]').click(function () {
+        $(this).parent().toggleClass("clicked")
+    });
+    
+</script>
+{% endfor %}

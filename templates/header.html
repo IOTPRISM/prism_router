@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/utils.js"></script>
+<link type="text/css" href="/static/css/header.css" rel="stylesheet" />
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content='width=device-width, initial-scale=1.0,text/html,charset=utf-8'>
+    <link type="text/css" href="/static/css/style.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/jpg" href="/static/favicon.png" />
+</head>
+
+<body>
+    <div class="header">
+        <div class="title">
+            <h1>IoTrimmer Control Panel</h1>
+            <h3>Intelligent, privacy preserving firewall for smart home devices</h3>
+            <img class="logo" src="/static/logo.png">
+        </div>
+
+        <div class="navbar">
+            <ul>
+                <li><a {% if request.path == '/' %} class="active" {% endif %} href="/">Home</a></li>
+                <li><a {% if 'settings' in request.path %} class="active" {% endif %} href="/settings">Settings</a></li>
+                <li><a {% if 'about' in request.path %} class="active" {% endif %} href="/about">About</a></li>
+            </ul>
+            <div id="logout">
+                <a href = "/logout">
+                    <img class="logout-logo" src="/static/logout.png">
+                </a>
+            </div>
+        </div>
+    </div>

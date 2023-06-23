@@ -1,0 +1,361 @@
+.active{
+  --accent-color:#e30073;
+}
+/* do not move change the format of the above code */
+
+/* Device Tables */
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+    margin: 0px;
+    background-color: var(--accent-color);
+}
+
+.title {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  margin: auto;
+  max-width: 1000px;
+}
+
+.title h1, .title h3 {
+  color: white;
+  position: absolute;
+  top: 40%;
+  left: 90px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.title h3 {
+  left: 130px;
+  -ms-transform: translateY(20px);
+  transform: translateY(20px);
+}
+
+.title .logo {
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.centered {
+  margin: auto;
+  width: 1000px;
+}
+
+.navbar {
+  width: 100%;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  list-style-type: none;
+}
+
+.navbar ul {
+  width: 920px;
+  padding: 0px 40px;
+}
+
+.navbar li {
+  display:block;
+  width:25%;
+  float:left;
+  text-align:center;   
+}
+
+.navbar li a {
+  display:inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px 50px;
+  text-decoration: none;
+  font-size: 17px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight:550
+}
+
+.navbar .active {
+  text-decoration: underline; 
+}
+
+.navbar li:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+.background {
+  min-height: 100vh;
+  background: linear-gradient(180deg, rgb(221, 160, 191) -4%, rgba(255,255,255,1) 4%);
+}
+
+/* Input Button */
+.btn {
+    background-color: var(--accent-color);
+    border-radius: 4px;
+    margin-left: 40px;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+/* text input */
+
+input[type=password],
+input[type=text],
+input[type=number],
+input[type=file],
+select {
+    width: 100%;
+    padding: 5px 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+.uploadLabel {
+    text-align: center;
+    display: inline-block;
+    padding: 7px 15px;
+    margin: 0px;
+    cursor: pointer;
+    background-color: #c9c9c9;
+    opacity: 0.5;
+    height: auto;
+  }
+
+  
+.uploadLabel:hover {
+    background-color: #969696;
+}
+    
+.uploadLabel:visited {
+    background-color: #616161;  
+}
+
+.icon {
+    width: 90px;
+    height: 90px;
+    object-fit:contain;
+}
+
+.connected {
+    position: absolute;
+    width: 20px;
+    right: 30px;
+    top: 20px;
+}
+
+
+
+/* text */
+h1,
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 40px;
+    margin: 0px;
+}
+
+h2 {
+  padding-top: 60px;
+  padding-bottom: 30px;
+}
+
+h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 50px;
+}
+
+li, p, a, label, span {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+label {
+  font-size: 18px;
+}
+
+.setting {
+  margin-bottom: 200px;
+  margin-top: 200px;
+}
+
+
+
+#earth_div {
+    width: 70%;
+    height: 600px;
+    float: right;
+}
+
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .container p {
+    padding: 5px 0px 5px 30px;
+    margin: 0px;
+    font-size: 14px;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: var(--accent-color);
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #e30073;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.switch-label {
+  display: none;
+}
+
+.container {
+  padding-bottom: 15px;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+  transform: translate(0, -5px);
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} 
+
+.outline {
+  margin: 10px 40px;
+  padding: 5px;
+  border: solid lightgray;
+  border-width: 4px;
+  border-radius: 8px 35px 35px 35px;
+}
+

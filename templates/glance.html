@@ -1,0 +1,18 @@
+<link type="text/css" href="/static/css/glance.css" rel="stylesheet" />
+<script type="text/javascript" src="static/js/utils.js"></script>
+
+<div class="glances-wrapper">
+    <div class="row">
+        <div class="column outline">
+            <h1 class="metric"><script>document.write(kFormatter({{ trafficMetrics.totalBlocked }}))</script> </h1>
+            <h3 class="caption">Trimmed requests out of <script>document.write(kFormatter({{ trafficMetrics.totalQueried }}))</script> </h3>
+        </div>
+        <div class="column outline">
+            <h1 class="metric">{{ trafficMetrics.thirdSupportPercentageBlocked }}% </h1>
+            <h3 class="caption">of trimmed requests are 3rd or support party </h3>
+        </div>
+        <div class="column outline">
+            <h1 class="metric">2</h1>
+            <h3 class="caption">personal information has been exposed </h3>
+        </div>
+    </div>

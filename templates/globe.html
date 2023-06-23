@@ -1,0 +1,144 @@
+<link type="text/css" href="/static/css/globe.css" rel="stylesheet" />
+
+<div class="table-wrapper">
+  <div>
+    <h2>Traffic by location</h2>
+    <div class="outline" style="overflow: auto; position: relative">
+      <span id="zoomIn">🔎+</span><span id="zoomOut">🔎-</span>
+      <div id="globe-container"></div>
+      <div class="control_container">
+        <ul class="checkboxes">
+          <br>
+          <h3>Show traffic on globe</h3>
+          <div class="scrollable">
+            {% for i, d in devices.enumerate() %}
+            <li>
+              <label class="container" onclick="refresh()">{{ d.name }}
+                <input type="checkbox" id="{{ i }}_checkbox" checked>
+                <span class="checkmark"> </span>
+              </label>
+            </li>
+            {% endfor %}
+          </div>
+          <div style="padding-top: 15px; ">
+            <br>
+            <label class="switch" onclick="refresh()">
+              <input id="blocked" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+            <span class="switchlabel">Only show trimmed traffic</span>
+            <br>
+            <br>
+            <h2> Requests by country</h2>
+            <br>
+            <h2 id="flags">flags</h2>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="static/webgl-globe/globe/third-party/Detector.js"></script>
+<script type="text/javascript" src="static/webgl-globe/globe/third-party/three.min.js"></script>
+<script type="text/javascript" src="static/webgl-globe/globe/third-party/Tween.js"></script>
+<script type="text/javascript" src="static/webgl-globe/globe/globe.js"></script>
+<script type="text/javascript" src="static/js/utils.js"></script>
+<script type="text/javascript">
+  
+  function refresh() {
+    refreshGlobe();
+    refreshFlags();
+  }
+
+  function refreshFlags() {
+    var countMap = {};
+    {% for i, d in devices.enumerate() %}
+      if ($('#{{ i }}_checkbox').prop('checked')) {
+        isoCodes = [];
+        if ($('#blocked').is(":checked")) {
+          var isoCodes = {{ d.get_iso_codes(blocked = True)|tojson }}
+        }
+        else {
+          var isoCodes = {{ d.get_iso_codes(blocked = False)|tojson }}
+        }
+        for (var i = 0; i < isoCodes.length; i++) {
+          if (countMap[isoCodes[i][0]]) {
+            countMap[isoCodes[i][0]] += isoCodes[i][1]
+          }
+          else {
+            countMap[isoCodes[i][0]] = isoCodes[i][1]
+          }
+        }
+      }
+    {% endfor %}
+    $('#flags').empty()
+    for (const [key, value] of Object.entries(countMap)) {
+      var html = '<span>' + isoCountryCodeToFlagEmoji(key) + '&nbsp;:' + kFormatter(value) + '&emsp;</span>'
+      $('#flags').prepend(html)
+    }
+  }
+
+  function refreshGlobe() {
+    $('#globe-container').empty();
+
+    if (!Detector.webgl) {
+      Detector.addGetWebGLMessage();
+    } else {
+
+      const container = $('#globe-container').get(0)
+
+      var accentColor = window.getComputedStyle(document.body).getPropertyValue('--accent-color');
+
+      var globe = new DAT.Globe(container, null, '/static/world-light.png', hexToRgb(accentColor));
+
+      var i, tweens = [];
+      var dat = [];
+      var checkbox;
+
+      TWEEN.start();
+
+      {% for i, d in devices.enumerate() %}
+      if ($('#{{ i }}_checkbox').prop('checked')) {
+        if ($('#blocked').is(":checked")) {
+          dat = dat.concat({{ d.get_locations(blocked = True) }});
+        }
+        else {
+          dat = dat.concat({{ d.get_locations(blocked = False) }});
+        }
+      }
+      {% endfor %}
+
+      globe.addData(dat, { format: 'magnitude', animated: true });
+      globe.createPoints();
+
+      new TWEEN.Tween(globe).to({ time: 1 }, 50).easing(TWEEN.Easing.Cubic.EaseOut).start();
+
+      globe.animate();
+    }
+  };
+  refresh();
+
+</script>
+
+<script>
+
+function simulateKeyPress(keyCode) {
+	var evtName = (typeof(type) === "string") ? "key" + type : "keydown";	
+
+	var event = document.createEvent("HTMLEvents");
+	event.initEvent(evtName, true, false);
+	event.keyCode = keyCode;
+	document.dispatchEvent(event);
+}
+
+  $('#zoomOut').click(function () {
+    simulateKeyPress(40);
+  })
+
+  $('#zoomIn').click(function () {
+    simulateKeyPress(38);
+  })
+</script>
+

@@ -1,0 +1,115 @@
+<link type="text/css" href="/static/css/table.css" rel="stylesheet" />
+<link type="text/css" href="/static/css/about.css" rel="stylesheet" />
+
+{% include 'header.html' %}
+
+<div class="background">
+    <br><br>
+    <div class="centered">
+        <div class="outline" style="padding: 40px;">
+            <div class="about-wrapper">
+                <div class="row">
+                    <!-- <div style="padding: 20px 40px;"> -->
+                    <div>
+                        <h3>System</h3>
+                        <table id="devices">
+                            <tr>
+                                <td>CPU usage: </td>
+                                <td>{{ sys.cpu }}</td>
+                            </tr>
+                            <tr>
+                                <td>Memory usage:</td>
+                                <td>{{ sys.mem }}</td>
+                            </tr>
+                            {% if sys.temp %}
+                            <tr>
+                                <td>Temperature:</td>
+                                <td>{{ sys.temp }} °C</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <td>Disk space usage:</td>
+                                <td>{{ sys.diskUsage }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br><br>
+                    <div>
+                        <h3>Network</h3>
+                        <table id="devices">
+                            <tr>
+                                <td>WAN Interface:</td>
+                                <td>{{ network.wanInterface }}: {{ network.wanIp }}</td>
+                            </tr>
+                            <tr>
+                                <td>WAN MAC:</td>
+                                <td>{{ network.wanInterfaceMac }}</td>
+                            </tr>
+                            <tr>
+                                <td>WiFi Interface:</td>
+                                <td>{{ network.print_wifi_interface() }} </td>
+                            </tr>
+                            <tr>
+                                <td>WiFi MAC:</td>
+                                <td>{{ network.print_wifi_interface_mac() }} </td>
+                            </tr>
+                            <tr>
+                                <td>IP Address:</td>
+                                <td>{{ network.ip }} </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br><br>
+                    <div>
+                        <h3>Database Metrics</h3>
+                        <table id="devices">
+                            <tr>
+                                <td>Trimlist version: </td>
+                                <td>{{ dbMetrics.blocklistVersion }}</td>
+                            </tr>
+                            <tr>
+                                <td>Database size:</td>
+                                <td>{{ dbMetrics.size }}</td>
+                            </tr>
+                            <tr>
+                                <td>Trimmed destinations:</td>
+                                <td>{{ dbMetrics.blockedCount }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total destinations:</td>
+                                <td>{{ dbMetrics.totalDestCount }}</td>
+                            </tr>
+                            <tr>
+                                <td>Unique destinations:</td>
+                                <td>{{ dbMetrics.uniqueDestCount }} </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+                <div class="database-metrics">
+                    <h3>Device Metrics</h3>
+                    <table id="devices" width="100%" style="max-width: unset" >
+                        <tr>
+                            <th class="top-left">Device Name</th>
+                            <th>Queried destinations</th>
+                            <th>Unique queried destinations</th>
+                            <th class="top-right">Trimmed dstinations</th>
+                        </tr>
+                        {% for d in devices %}
+                        <tr>
+                            <td>{{ d.name }}: </td>
+                            <td>{{ d.totalDestCount }}</td>
+                            <td>{{ d.uniqueDestCount }}</td>
+                            <td>{{ d.blockedCount }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+
+{% include 'footer.html' %}

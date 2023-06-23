@@ -1,0 +1,6 @@
+#trafficChart,
+#trafficChartType,
+#blockedChartDevice {
+    padding: 30px;
+    max-height: 300px;
+}

@@ -1,0 +1,35 @@
+{% include 'header.html' %}
+<div class="background">
+    <div class="centered">
+        <br>
+        <div>
+            {% include 'glance.html' %}
+        </div>
+        
+        {% include 'device-table.html' %}
+        {% include 'modal.html' %}
+
+        <div>
+            {% include 'globe.html' %}
+        </div>
+        <div id="graphs">
+            <h2>Device activity over 24 hours by device </h2>
+            <div>
+                {% include 'traffic-graph.html' %}
+            </div>
+            <h2>Trimmed activity over 24 hours by device </h2>
+            <div>
+                {% include 'blocked-graph-by-device.html' %}
+            </div>
+            <h2>Traffic over 24 hours by type </h2>
+            <div>
+                {% include 'traffic-graph-by-type.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<br><br><br>
+{% include 'footer.html' %}
+
+<script type="text/javascript" src="static/js/table.js"></script>

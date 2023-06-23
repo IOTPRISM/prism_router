@@ -1,0 +1,98 @@
+ /* The Modal (background) */
+ .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    z-index: 4;
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    max-width: 600px; /* Could be more or less, depending on screen size */
+    border-radius: 15px;
+  }
+
+  .modal-content .outline {
+    margin: 30px;
+    padding: 30px;
+    border-radius: 8px;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: var(--accent-color);;
+    float: right;
+    font-size: 36px;
+    font-weight: bold;
+    transform: translate(0, -10px);
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  } 
+
+.dest {
+  display:inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 90%; 
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+.switch {
+  margin-right: 20px;
+}
+
+.dest-disable {
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.dest-container {
+  background-color: #f2f2f2;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.saveChanges {
+  margin-left: 0px;
+  width: 160px;
+}
+
+.icon {
+  width: 90px;
+}
+
+.uploadLabel {
+  text-align: center;
+  display: inline-block;
+  padding: 7px 15px;
+  cursor: pointer;
+  background-color: #c9c9c9;
+  opacity: 0.5;
+  height: auto;
+}
+
+.clicked {
+  background-color: rgb(70, 70, 70);
+}
+
+.uploadLabel:hover {
+  background-color: #969696;
+}
