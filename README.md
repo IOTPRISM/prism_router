@@ -1,6 +1,6 @@
 # PRISM Router Docker image
 
-The image of the software can be downloaded [here](https://www.dropbox.com/scl/fi/p5lvr8khvkqnqycwbuu2v/netml_cli_armv7l_demo.tar.gz?rlkey=q50gq1wgcfextx3r6mlrxz59y&dl=0)
+The image of the software can be downloaded from https://liveuclac-my.sharepoint.com/personal/uceeam9_ucl_ac_uk/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fuceeam9%5Fucl%5Fac%5Fuk%2FDocuments%2Fprism%5Fsoftware&ga=1
 
 This module is a Docker-packaged Debian image for performing anomaly detection on Internet of Things (IoT) network traffic. The anomaly detection algorithms are based on NetML library ([https://github.com/noise-lab/netml](https://github.com/noise-lab/netml))
 
